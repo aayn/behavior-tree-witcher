@@ -1,0 +1,42 @@
+<!-- 
+  In the Spawn2 tree, 10 enemies are spawned in parallel, all writing to the
+  same blackboard value {enemy1}. The enemy type that manages to spawn first and
+  satisfy the parallel threshold is written into {enemy1}. Then, the value in
+  {enemy1} is written to the external blackboard with key "enemy_one". Next, in
+  MainTree, the blackboard value "enemy_one" from its subtree is written to an
+  internal (to MainTree) blackboard with key "visible_enemy". This
+  "visible_enemy" is passed to Geral's input node, and he draws a sword best
+  suited to that visible enemy.
+-->
+<root main_tree_to_execute="MainTree">
+
+  <BehaviorTree ID="MainTree">
+    <Sequence name="root">
+      <SubTree ID="Spawn2" enemy_one="visible_enemy"/>
+      <Geralt name="White Wolf" enemy="{visible_enemy}" />
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="Spawn2">
+    <Sequence>
+      <Parallel threshold="1">
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+        <SpawnEnemy enemy="{enemy1}" />
+      </Parallel>
+      <SetBlackboard output_key="enemy_one" value="{enemy1}" />
+    </Sequence>
+  </BehaviorTree>
+</root>
